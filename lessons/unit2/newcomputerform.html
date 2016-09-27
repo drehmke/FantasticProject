@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>New Computer Form</title>
+  </head>
+  <body>
+    <form class="" action="index.html" method="post">
+      <fieldset>
+        <legend>CPU:</legend>
+          <label><input type="radio" name="CPU" value='intel3' /> Intel i3</label>
+          <label><input type="radio" name="CPU" value='intel4' /> Intel i4</label>
+          <label><input type="radio" name="CPU" value='intel5' /> Intel i7</label>
+      </fieldset>
+      <fieldset>
+        <legend>RAM:</legend>
+          <label><input type="radio" name="ram" value='8gb' />8GB</label>
+          <label><input type="radio" name="ram" value='16gb' />16GB</label>
+      </fieldset>
+      <fieldset>
+        <legend>Additional Features:</legend>
+          <label><input type='checkbox' id='vrhelmet'>Virtual Reality Helmet</label>
+          <label><input type='checkbox' id='3dscreen'>3D Screen</label>
+          <label><input type='checkbox' id='stereospeakers'>Stereo Speakers</label>
+      </fieldset>
+      <input type="submit" value="Submit">
+    </form>
+
+    <script>
+  /*********************************************************
+   *
+   *   Test Checkboxes/Radio Buttons Script
+   *
+   *********************************************************/
+   // loop through each form and handle submit event
+   for (var i=0;i<document.forms.length;i++) {
+     var form = document.forms[i];
+     form.addEventListener('submit', function(e){
+       e.preventDefault();
+       var results = '';
+
+      // loop through all checkboxes to see if checked
+      var checkboxes = form.querySelectorAll("input[type='checkbox']");
+      for(var k = 0; k < checkboxes.length; k++) {
+        results += checkboxes[k].id + '=' + checkboxes[k].checked + '\n';
+      }
+      // loop through all radio butotns to display value
+      var radiobuttons = form.querySelectorAll("input[type='radio']:checked");
+      for(var m = 0; m < radiobuttons.length; m++) {
+        results += radiobuttons[m].name + '=' + radiobuttons[m].value + '\n';
+      }
+      // alert results
+      alert(results);
+    });
+  }
+</script>
+  </body>
+</html>

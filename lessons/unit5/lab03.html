@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Unit 5 - Lab 03</title>
+  </head>
+  <body>
+
+    <table border="1">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Price</th>
+      </tr>
+    </thead>
+    <tbody id="productList">
+    </tbody>
+    </table>
+    <script>
+
+      var products = [
+       {name:'Bread', price:2.33},
+       {name:'Milk', price:1.99},
+       {name:'Cheese', price:5.00}
+     ];
+     // get reference to our table
+     var productList = document.getElementById('productList');
+
+     // each product in seperate table cells
+     var tr;
+     var tdName;
+     var tdPrice;
+     for( var i = 0; i < products.length; i++ ) {
+      tr = document.createElement('tr');
+
+      tdName = document.createElement('td');
+      tdName.innerHTML = products[i].name;
+      tr.appendChild(tdName);
+
+      tdPrice = document.createElement('td');
+      tdPrice.innerHTML = products[i].price;
+      tr.appendChild(tdPrice);
+
+      productList.appendChild(tr);
+     }
+
+   </script>
+
+  </body>
+</html>

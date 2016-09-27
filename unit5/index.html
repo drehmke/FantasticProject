@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>My To Do List</title>
+
+  </head>
+  <body>
+    <h1>To Do List</h1>
+    <div class="date today" id="todaysdate"></div>
+
+    <form class="" id="todoNew">
+      <input type="text" name="todo" id="todo" value="">
+      <input type="submit" name="submit" id="submit" value="Add To List">
+    </form>
+
+    <table class="todoTable">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Status</th>
+          <th>To Do</th>
+          <th>Created</th>
+          <th>Completed</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="todoList">
+      </tbody>
+    </table>
+
+
+    <script src="cookies.js"></script>
+    <script src="todo.js"></script>
+  </body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Unit 5 - Lab 10</title>
+  </head>
+  <body>
+    <form id="loginForm">
+      <label for="username">Username: </label><input type="text" name="username" id="username" value=""><br />
+      <label for="password">Password: </label><input type="password" name="password" id="password" value=""><br />
+      <label for="rememberme">Remember Me</label><input type="checkbox" value="true" id="rememberme" checked /><br />
+      <input type="submit" name="name" id="submit" value="Fake-Login">
+    </form>
+
+    <script>
+      var login = document.getElementById( 'loginForm');
+      var expires = new Date();
+      expires.setMonth(expires.getMonth() + 1);
+
+      login.addEventListener('submit', function(e){
+        e.preventDefault();
+        var uname = document.getElementById('username').value;
+        var pword = document.getElementById('password').value;
+
+        if( document.getElementById('rememberme').checked === true ) {
+          document.cookie = 'username='+uname+';expires='+ expires.toUTCString();
+          document.cookie = 'password='+pword+';expires='+ expires.toUTCString();
+          console.log(document.cookie);
+        } else {
+          console.log('No login information was saved');
+        }
+      })
+
+      })
+    </script>
+  </body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script>
+    function lightGreyAside()
+    {
+      var allAsides = document.getElementsByTagName('aside');
+      for( var i=0; i<allAsides.length;i++) {
+        var parent = allAsides[i].parentElement;
+        if( parent.nodeName == 'ARTICLE') {
+          allAsides[i].style.backgroundColor = 'lightgrey';
+        }
+      }
+    }
+
+    function lightGreyAside2()
+    {
+      var aside = document.querySelector('aside');
+      aside.style.backgroundColor = 'lightgrey';
+    }
+    </script>
+  </head>
+  <body onLoad='lightGreyAside2()'>
+
+    <article>
+      <p>
+        The body of the article.
+      </p>
+      <aside>
+        This aside is in the article.
+      </aside>
+    </article>
+
+    <aside>
+      This aside is outside of the article.
+    </aside>
+
+
+  </body>
+</html>

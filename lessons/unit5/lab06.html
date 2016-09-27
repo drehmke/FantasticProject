@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Unit 5 - Lab 6</title>
+  </head>
+  <body>
+    <div id="typeMe"></div>
+
+    <div id="grade"></div>
+
+
+
+
+    <script>
+    var typeMe = document.getElementById('typeMe');
+    var grade  = document.getElementById('grade');
+    var randomLetter;
+    var letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+    // pull a random letter and display it in typeMe
+    function setRandomLetter() {
+      randomLetter = letters[Math.floor(Math.random() * letters.length)];
+      typeMe.innerHTML = randomLetter;
+    }
+
+    document.addEventListener('ready', setRandomLetter() );
+    document.addEventListener('keypress', function(e){
+      var char = String.fromCharCode(e.keyCode || e.which);
+      if( char == randomLetter ) {
+        grade.innerHTML = "Success!";
+        setRandomLetter();
+      } else {
+        grade.innerHTML = "Try again";
+      }
+    })
+
+    </script>
+
+  </body>
+  <!--
+  Math.floor(Math.random() * poemWords.length)
+  -->
+</html>

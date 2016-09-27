@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Unit 5 - Lab 07</title>
+  </head>
+
+  <body>
+    <form class="myForm" id="weatherSearch">
+      <input type="text" name="city" id="city" value=""> <input type="submit" name="submit" value="Get Weather">
+    </form>
+
+    <div id="weatherResults"></div>
+
+
+    <script>
+    document.getElementById('weatherSearch').addEventListener('submit', function(e){
+      e.preventDefault();
+      var city = document.getElementById('city').value;
+      console.log(city);
+
+      var weatherAPI = 'http://api.openweathermap.org/data/2.5/weather?API=&APPID=d43debb0b9a3919fef3f0f689e82583e&q=' + city;
+      var request = new XMLHttpRequest();
+      var weatherResults = document.getElementById('weatherResults');
+
+      request.open('GET', weatherAPI);
+
+      request.addEventListener('load', function(e){
+        var data = JSON.parse(request.responseText);
+
+        var weatherIcon = '<img src="http://openweathermap.org/img/w/' + data.weather[0].icon + '.png" align="left" valign="text-center"/>';
+        var weatherDescription = data.weather[0].description;
+
+        var display = weatherIcon + " " + weatherDescription;
+
+        weatherResults.innerHTML = display;
+        console.log(display);
+      })
+
+      request.send();
+    })
+/*
+    var weatherAPI = 'http://api.openweathermap.org/data/2.5/weather?API=&APPID=d43debb0b9a3919fef3f0f689e82583e&q=Seattle';
+    var request = new XMLHttpRequest();
+
+    request.open('GET', weatherAPI);
+
+    request.addEventListener('load', function(e){
+      var data = JSON.parse(request.responseText);
+      console.log(data);
+    })
+
+    request.send();
+*/
+    </script>
+  </body>
+</html>

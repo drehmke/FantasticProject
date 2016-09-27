@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+</head>
+<body>
+    <h1>Superhero Detector</h1>
+    <form id="myForm">
+        <div>
+            <label><input id="secretIdentity" type="checkbox" value="true" /> Secret Identity?</label>
+        </div>
+        <div>
+            <label for="moralityLevel">Morality Level:</label>
+            <select id="moralityLevel">
+                <option value="bad">Bad</option>
+                <option value="normal">Normal</option>
+                <option value="good">Good</option>
+            </select>
+        </div>
+        <fieldset>
+            <legend>Courage Level:</legend>
+            <label><input name="courageLevel" type="radio" value="coward" /> Coward</label>
+            <label><input name="courageLevel" type="radio" value="brave" /> Brave</label>
+            <label><input name="courageLevel" type="radio" value="foolhardy" /> Foolhardy</label>
+        </fieldset>
+        <button>Submit</button>
+    </form>
+    <script>
+        document.getElementById('myForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        var secret;
+
+        // if super hero then alert "Superhero Detected!"
+        var identity = document.querySelector('input[type="checkbox"]:checked');
+        var morality = document.getElementById('moralityLevel').value;
+        var courage  = document.querySelector('input[name="courageLevel"]:checked');
+
+        console.log(identity.value);
+        if( (identity.value) && (morality == "good") && courage.value == "brave" ) {
+          alert('Superhero Detected!');
+        }
+      });
+    </script>
+</body>
+</html>
