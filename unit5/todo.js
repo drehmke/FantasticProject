@@ -30,7 +30,7 @@ newForm.addEventListener('submit', function(e){
   createRow(newTodo);
 })
 
-// Toggle task completeness - any checkbox, on change, bubble up
+// Toggle task completeness - any checkbox, on change, bubble up ---------------
 todoList.addEventListener('change', function(e){
   e.preventDefault();
   if( e.target.tagName == 'INPUT' ) {
@@ -57,6 +57,15 @@ todoList.addEventListener('change', function(e){
   }
 })
 
+// Delete All Tasks ------------------------------------------------------------
+var delAll = document.getElementById('clearList');
+delAll.addEventListener('click', function(){
+  // Kill command received!
+  if( allTodos ) {
+    localStorage.removeItem(sessKey);
+    todoList.innerHTML = '';
+  }
+})
 /* ---- Functions ----------------------------------------------------------- */
 function createRow( todo )
 {
