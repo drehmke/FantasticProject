@@ -76,7 +76,7 @@ todoList.addEventListener('click', function(e){
       allTodos = newTodos;
       // push the changes to localStorage
       var update = JSON.stringify(allTodos);
-      localStorage.setItem(sessKey, allTodos);
+      localStorage.setItem(sessKey, update);
       // delete the table row
       var remRow = document.getElementById("row"+remID);
       remRow.remove();
