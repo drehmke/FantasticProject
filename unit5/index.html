@@ -3,33 +3,39 @@
   <head>
     <meta charset="utf-8">
     <title>My To Do List</title>
-
+    <link href="https://fonts.googleapis.com/css?family=Great+Vibes" rel="stylesheet">
+    <link href="style.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
     <h1>To Do List</h1>
     <div class="date today" id="todaysdate"></div>
 
-    <form class="" id="todoNew">
-      <input type="text" name="todo" id="todo" value="">
-      <input type="submit" name="submit" id="submit" value="Add To List">
-    </form>
-    <input type="button" name="clearList" id="clearList" value="Clear List">
+    <div class="content">
 
-    <table class="todoTable">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Status</th>
-          <th>To Do</th>
-          <th>Created</th>
-          <th>Completed</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody id="todoList">
-      </tbody>
-    </table>
+      <div class="formHolder">
+        <form class="" id="todoNew">
+          <label for="todo">Add your task here: </label><input type="text" name="todo" id="todo" value="" class="entry">
+          <input type="submit" name="submit" id="submit" value="Add To List" class="button add">
+        </form>
+        <input type="button" name="clearList" id="clearList" value="Clear List" class="button delete deleteall">
+      </div>
 
+      <table class="todoTable">
+        <thead>
+          <tr class="header">
+            <th>ID</th>
+            <th>Status</th>
+            <th>To Do</th>
+            <th>Created</th>
+            <th>Completed</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="todoList">
+        </tbody>
+      </table>
+
+    </div>
 
     <script src="cookies.js"></script>
     <script src="todo.js"></script>

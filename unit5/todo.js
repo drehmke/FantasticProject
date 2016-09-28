@@ -45,6 +45,7 @@ todoList.addEventListener('click', function(e){
           allTodos[i].cdDate = false;
           document.getElementById(cid).checked = false; // make sure the checkbox is unchecked
           document.getElementById('cdID'+cid).innerHTML = '';
+          document.getElementById("row"+cid).setAttribute('class', '');
         } else {
           // we are completing the task! Yay! ---------------------
           allTodos[i].complete = true;
@@ -54,9 +55,10 @@ todoList.addEventListener('click', function(e){
           cdCell.innerHTML = formatShortDate(today);
           // update the checkbox
           document.getElementById(cid).checked = true;
+          // change our style
+          document.getElementById("row"+cid).setAttribute('class', 'completed');
         }
       }
-      //console.log(allTodos[i]);
     }
     // and we'll need to re-store allTodos
     var update = JSON.stringify(allTodos);
@@ -101,6 +103,8 @@ function createRow( todo )
   var tds;
   tr = document.createElement('tr');
   tr.setAttribute('id', "row"+todo.id);
+  if( todo.complete == true )
+  { tr.setAttribute('class', 'completed'); }
   tds = createTd(todo.id, 'text'); // id
   tr.appendChild(tds);
   tds = createTd(todo.complete, 'checkbox', todo.id); // complete
@@ -120,6 +124,7 @@ function createRow( todo )
   btn.setAttribute('value', todo.id);
   btn.innerHTML = "Delete Task";
   var td = document.createElement('td'); // not running this through createTD because I don't need all that
+  td.setAttribute('class', 'endofrow');
   td.appendChild(btn);
   tr.appendChild(td);
   // /end Delete BUTTON
