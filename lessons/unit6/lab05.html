@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Unit 6 - Lab5 5</title>
+    <style>
+    input { display: inline-block; width: 200px; }
+    </style>
+  </head>
+  <body>
+    <div>
+      <form id="flickrSearch">
+        <input type="text" name="fsterm" id="fsterm" value="" />
+        <input type="submit" name="name" value="Search Flickr" />
+      </form>
+    </div>
+
+    <div id="images"></div>
+
+    <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script>
+      var url = "http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?";
+      $('#flickrSearch').submit(function(e){
+        e.preventDefault();
+        
+        $.getJSON( url, {
+          tags: $('#fsterm').val(),
+          format: "json"
+        })
+        .done(function(results) {
+          var images = '';
+          for (var i=0;i<results.items.length;i++) {
+            images += '<img src="' + results.items[i].media.m + '" />';
+          }
+          $('#images').html(images);
+        })
+        .fail(function(results) {
+          console.error(results);
+        });
+      })
+    </script>
+
+  </body>
+</html>

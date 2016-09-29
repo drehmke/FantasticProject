@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Unit 6 - Lab 1 - jQuery version</title>
+
+  </head>
+  <body>
+    <h1>Useful Items on a Deserted Island</h1>
+    <table id="itemList">
+      <tr>
+        <td>Matches</td>
+      </tr>
+      <tr>
+        <td>Flares</td>
+      </tr>
+      <tr>
+        <td>Water</td>
+      </tr>
+      <tr>
+        <td>Encyclopedia</td>
+      </tr>
+    </table>
+    <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script>
+      $('tr:nth-child(odd)').css('background-color', 'lightgrey');
+    </script>
+  </body>
+</html>

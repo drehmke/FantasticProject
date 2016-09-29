@@ -1,0 +1,25 @@
+fieldset { width: 105px; position: relative; }
+#swPause { display: none; }
+
+.timer
+{
+  font-family: 'Courier New', monospace;
+  font-size: 1.2em;
+  margin: 0 auto;;
+  position: relative;
+  width: 58px;
+}
+
+.button
+{
+  border: 1px solid #fff;
+  border-style: ridge;
+  border-radius: 5px;
+  padding: 5px; margin: 2px;
+  box-shadow:3px 2px 2px lightgrey
+}
+.button:active { border-style: inset; }
+.swG { background-color: lightgreen; }
+.swS { background-color: pink; }
+.swP { background-color: bisque; }
+.swR { background-color: burlywood; }

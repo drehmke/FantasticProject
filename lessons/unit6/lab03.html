@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Unit 6 - Lab 3</title>
+    <style>
+      form label {
+        display:block;
+      }
+
+      .help {
+        display:none;
+        background-color: lightyellow;
+      }
+    </style>
+  </head>
+  <body>
+
+    <form id="productForm">
+      <div id="validationErrors"></div>
+      <label>
+          Product Name:
+          <input id="productName" />
+          <span class="help">Enter the name of your product</span>
+      </label>
+      <label>
+        Product Price:
+        <input id="productPrice" />
+        <span class="help">Enter the price of your product</span>
+      </label>
+      <button>Save</button>
+    </form>
+
+  <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+  <script>
+    // when you focus on an input, display help
+    $('input').on('focus', function() {
+      var help = $(this).next();
+      // (1) hide all of the existing help elements
+      $('.help').hide('fast');
+
+      // (2) fade into view the current help element
+      $(help).fadeIn('slow');
+    });
+
+  </script>
+  </body>
+</html>

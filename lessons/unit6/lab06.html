@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Unit 6 - Lab 6</title>
+    <link href="tooltipster/css/tooltipster.bundle.min.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+<!--  To put a tooltip on an image -->
+<img src="imgs/robot-blue.png" class="tooltip" title="This is my images tooltip!" />
+
+<!-- To put a tooltip on some text -->
+<span class="tooltip" title="This is my spans tooltip message">blah blah blah</span>
+
+<!-- to put a tooltip on an input tag -->
+<input type="text" class="tooltip" title="THis is my inputs tooltip message" id="testInput" value="" />
+
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+    <script type="text/javascript" src="tooltipster/js/tooltipster.bundle.min.js"></script>
+    <script>
+      document.getElementById('testInput').setAttribut('title','<span style="color:red;>boo</span>"');
+    </script>
+
+  </body>
+</html>

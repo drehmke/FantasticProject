@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Unit 6 - Lab 4</title>
+  </head>
+  <body>
+
+    <div id="potd">
+      <div id="potdImg"></div>
+      <div id="potdCaption"></div>
+    </div>
+
+    <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script>
+      var nasaAPI = 'https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY';
+      //var nasaAPI = 'https://api.nasa.gov/planetary/apod?api_key=';
+
+      $.getJSON(nasaAPI)
+        .done(function(result){
+          // create our image, set the source
+          var potdImg = document.createElement('IMG');
+          potdImg.setAttribute('src', result.url);
+          $('#potdImg').html(potdImg);
+          // update the caption div
+          $('#potdCaption').html(result.title);
+        })
+
+        .fail(function(result){
+          // create a div for the error message and display it
+          //console.log(result);
+          var errorMsg = document.createElement('DIV');
+          errorMsg.setAttribute('id','errorMsg');
+          $('#potd').html(errorMsg);
+          $('#errorMsg').html( result.statusText );
+          $('errorMsg').show('slow');
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Unit 6 - Lab 02</title>
+  </head>
+  <body>
+    <form id="calculator">
+      <input type='number' id="num1" /> +
+      <input type='number' id="num2" />
+      <input type='submit' value="=" />
+      <span id="calcResults">0</span>
+    </form>
+
+    <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script>
+      $('#calculator').on('submit', function(e){
+        e.preventDefault();
+
+        // sum our numbers
+        var result = parseInt($('#num1').val()) + parseInt($('#num2').val());
+
+
+        // display our result in a span
+        $('#calcResults').html(result);
+      });
+    </script>
+  </body>
+</html>
