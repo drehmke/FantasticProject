@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <style>
+      #modal { border: 1px solid #000; }
+    </style>
+  </head>
+  <body>
+
+    <div class="container">
+      <button id="addprod">Add A Product</button>
+
+      <div id="modalContainer" class="modal fade">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1>Add a product</h1>
+            </div>
+            <div class="modal-body">
+              <form class="form">
+                <div class="form-group">
+                  <label for="pname">Product Name: </label>
+                  <input type="text" class="form-control" id="pname" />
+                </div>
+                <div class="form-group">
+                  <label for="pprice">Product Price: </label>
+                  <input type="text" class="form-control" id="pprice" />
+                </div>
+                <div class="form-group">
+                  <label for="pqty">Product QTY: </label>
+                  <input type="text" class="form-control" id="pqty" />
+                </div>
+                <input type="submit" value="Save Product" class="btn btn-primary" />
+                <input type="reset" value="Cancel" class="btn btn-default" />
+              </form>
+            </div>
+            <div class="modoal-footer">
+              <button id="hidefrom">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script>
+      $('#addprod').click(function(){
+        $('#modalContainer').show();
+      });
+
+      $('#hideform').click(function(){
+        $('#modalContainer').hide();
+      });
+    </script>
+  </body>
+</html>
