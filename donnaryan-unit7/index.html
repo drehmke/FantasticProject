@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>My Favorite Movies</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="movies.css" type="text/css" />
+  </head>
+  <body>
+
+    <div class='container'>
+      <h1>My Favorite Movies List</h1>
+
+      <table class='table table-striped' id="favoriteMovies">
+        <thead>
+          <tr>
+            <!--<th>ID</th>-->
+            <!--<th>Checkbox</th>-->
+            <th class='col-sm-5'>Movie Title</th>
+            <th class='col-sm-5'>Directed By</th>
+            <th class='col-sm-2 text-right'><button class="btn btn-sm btn-success" id="addMovie" title="Add A Movie"><span class="glyphicon glyphicon-plus"></span></button></th>
+          </tr>
+        </thead>
+        <tbody id="movieList">
+          <!--<tr><td>id</td><td>checkbox</td><td>Movie Title(modal link to edit)</td><td>Director</td><td>Delete (modal)</td> -->
+        </tbody>
+        <tfoot>
+        </tfoot>
+      </table>
+    </div>
+
+<!-- Modal - Add ----------------------------------------------------------- -->
+<div id="modalAdd" class="modal fade" role="dialog" aria-labelledby="modalAddLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h2>Add A Favorite Movie</h2>
+      </div>
+      <form class="form form-horizonal">
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="movieTitle">Movie Title: </label>
+          <input type="text" value="" id="movieTitle" name="movieTitle" placeholder="Enter the movie title here" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label for="movieDirector">Movie Director: </label>
+          <input type="text" value="" id="movieDirector" name="movieDirector" placeholder="Enter the director's name here" class="form-control" />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <input type="submit" value="Add Movie" class="btn btn-success" />
+        <input type="reset" value="Cancel" class="close btn btn-prirmary" data-dismiss="modal" id="clearAddMovie" />
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+<!-- Modal - Confirm Delete ------------------------------------------------ -->
+<div id="modalDelete" class="modal fade" role="dialog" aria-labelledby="modalDeleteLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h2 class="del">Confirm!</h2>
+      </div>
+      <div class="modal-body" id="confirmDelBody"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal" id="delMovie" >Unfavorite</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" >Stop! I still like this!</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="movies.js"></script>
+
+  </body>
+</html>
+
+
+<!--
+Each movie should have a title and a director
+use bootstrap table table-striped
+each row should have a delete button, that triggers a modal to confirm delete
+there should be a button to add, which triggers a modal to add a new movie
+
+movies should be stored in a javascript array - adding a new movie should add it to the array, deleting should remove it
+-->
