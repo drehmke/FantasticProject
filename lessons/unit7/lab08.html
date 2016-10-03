@@ -7,42 +7,40 @@
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
     <style>
-      #modal { border: 1px solid #000; }
+      .modal-dialog { background-color: white; }
     </style>
   </head>
   <body>
 
-    <div class="container">
-      <button id="addprod">Add A Product</button>
+    <div class="container-fluid">
+      <button type="button" id="showDialog" class="btn btn-primary">
+        New Product
+      </button>
 
       <div id="modalContainer" class="modal fade">
         <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h1>Add a product</h1>
-            </div>
-            <div class="modal-body">
-              <form class="form">
-                <div class="form-group">
-                  <label for="pname">Product Name: </label>
-                  <input type="text" class="form-control" id="pname" />
-                </div>
-                <div class="form-group">
-                  <label for="pprice">Product Price: </label>
-                  <input type="text" class="form-control" id="pprice" />
-                </div>
-                <div class="form-group">
-                  <label for="pqty">Product QTY: </label>
-                  <input type="text" class="form-control" id="pqty" />
-                </div>
-                <input type="submit" value="Save Product" class="btn btn-primary" />
-                <input type="reset" value="Cancel" class="btn btn-default" />
-              </form>
-            </div>
-            <div class="modoal-footer">
-              <button id="hidefrom">Close</button>
-            </div>
+          <div class="modal-header">
+            <button type="button" class="close"> &times; </button>
+            <h4 class="modal-title">Add A New Product</h4>
+          </div>
+          <div class="modal-body">
+            <form id="productForm">
+              <div class="form-group">
+                <label for="name">Product Name :</label>
+                <input type="text" id="name" name="name" value="" placeholder="Product Name" />
+              </div>
+              <div class="form-group">
+                <label for="price">Product Price :</label>
+                <input type="text" id="price" name="price" value="" placeholder="Product Price" />
+              </div>
+          </div>
+          <div class="modal-footer">
+            <input type="submit" value="Save" class="btn btn-primary" />
+            <input type="reset" value="Cancel" class="btn btn-default close" />
+          </form>
           </div>
         </div>
       </div>
@@ -53,13 +51,18 @@
     <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script>
-      $('#addprod').click(function(){
-        $('#modalContainer').show();
-      });
-
-      $('#hideform').click(function(){
-        $('#modalContainer').hide();
-      });
+      $('#showDialog').on('click', function(){
+        $('#modalContainer').modal('show');
+      })
+      $('.close').on('click', function(){
+        $('#modalContainer').modal('hide');
+      })
+      $('#productForm').on('submit',function(e){
+        e.preventDefault();
+        console.log("Product Name is: " + $('#name').val());
+        console.log("Product Price is: " + $('#price').val());
+        $('#modalContainer').modal('hide');
+      })
     </script>
   </body>
 </html>
