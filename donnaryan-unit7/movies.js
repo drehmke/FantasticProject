@@ -113,9 +113,7 @@ function deleteMovies(id) {
   console.log(movies);
   for( var i = 0; i < movies.length; i++ ){
     if(movies[i].id != id){
-      console.log('Movie id ' + movies.id + " does not match " + id);
       newMovies.push(movies[i]);
-      console.log(movies[i]);
     }
   }
   console.log('newMovies : ' + newMovies);
