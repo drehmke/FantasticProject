@@ -1,0 +1,90 @@
+<!-- todo
+ * Add Required icons to all the fname, lname, email
+ * Add value validation to fname, lname, email
+ * add format validation to email, phone (333-333-4444)
+-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Add - Contact Manager</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/slate/bootstrap.min.css" rel="stylesheet" integrity="sha384-RpX8okQqCyUNG7PlOYNybyJXYTtGQH+7rIKiVvg1DLg6jahLEk47VvpUyS+E2/uJ" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+    <link rel="stylesheet" href="contacts.css" type="text/css" />
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collased" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle Navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Contact Manager</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class=""><a href="index.html"><i class="fa fa-users" aria-hidden="true"></i> Home</a></li>
+            <li class="active"><a href="add.html"><i class="fa fa-user-plus" aria-hidden="true"></i> Add A Contact</a></li>
+            <li class=""><a href="edit.html"><i class="fa fa-user" aria-hidden="true"></i> Edit A Contact</a></li>
+            <li class=""><a href="del.html"><i class="fa fa-user-times" aria-hidden="true"></i> Delete A Contact</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <form class="form-inline">
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search for ...">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="button">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                    <span class="sr-only">Search</span>
+                  </button>
+                  </span>
+                </div>
+            </form>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container addContact">
+      <h1><i class="fa fa-user-plus" aria-hidden="true"></i> Add A Contact</h1>
+      <form class="form" id="addContact">
+        <div class="form-group has-feedback" id="fnameGroup">
+          <label for="fname">First Name: <i class="fa fa-asterisk" aria-hidden="true"></i></label>
+          <input type="text" class="form-control" id="fname" name="fname" placeholder="First Name" />
+        </div>
+        <div class="form-group has-feedback" id="lnameGroup">
+          <label for="lname">Last Name: <i class="fa fa-asterisk" aria-hidden="true"></i></label>
+          <input type="text" class="form-control" id="lname" name="lname" placeholder="Last Name" />
+        </div>
+        <div class="form-group" id="phoneGroup">
+          <label for="phone">Phone Number:</label>
+          <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone 333-333-4444" />
+        </div>
+        <div class="form-group" id="emailGroup">
+          <label for="email">Email Address:</label>
+          <input type="email" class="form-control" id="email" name="email" placeholder="email@address.com" />
+        </div>
+        <div class="form-group" id="addressGroup">
+          <label for="address">Address:</label>
+          <textarea class="form-control" rows="3" id="address" name="address"></textarea>
+        </div>
+        <div class="form-group">
+          <input type="submit" value="Add Contact" class="btn btn-primary" />
+          <input type="reset" value="Clear Form" class="btn btn-default" />
+        </div>
+      </form>
+    </div>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="contact.js"></script>
+  </body>
+</html>
