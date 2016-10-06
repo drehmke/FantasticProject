@@ -6,19 +6,17 @@ body {
 .has-feedback label~.form-control-feedback { top: 35px; }
 
 /* Font Awesome icons */
-.fa {
-	text-shadow:
-		-1px -1px 0 #a9a9a9,
-		 1px -1px 0 #a9a9a9,
-		-1px  1px 0 #a9a9a9,
-		 1px  1px 0 #a9a9a9;
-}
+.faBorder       { text-shadow: -1px -1px 0 #a9a9a9, 1px -1px 0 #a9a9a9, -1px  1px 0 #a9a9a9, 1px  1px 0 #a9a9a9; }
 .fa-users				{ color: #0F434F; }	/* Homepage */
 .fa-user				{ color: #6B949E; } /* Edit */
+.fa-pencil			{ color: #6B949E; } /* Edit */
 .fa-user-plus		{ color: #4F7514; } /* Add */
 .fa-user-times	{ color: #AA4639; } /* Delete */
-.fa-asterisk		{ color: #AA4639; text-shadow: none; } /* Required */
+.fa-times	      { color: #AA4639; } /* Delete */
+.fa-asterisk		{ color: #AA4639; } /* Required */
 
+#contactHome #list h1 { background-color: #0f434f; padding: 5px; margin-bottom: 0px; }
+#contactAdd #addForm h1 { background-color: #4f7514; padding: 5px; }
 
 .has-error input[type=text] { background-color: #FFB4AA; }
 

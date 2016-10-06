@@ -1,13 +1,8 @@
-<!-- todo
- * Add Required icons to all the fname, lname, email
- * Add value validation to fname, lname, email
- * add format validation to email, phone (333-333-4444)
--->
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Add - Contact Manager</title>
+    <title>Contact Manager</title>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <!-- Optional theme -->
@@ -30,10 +25,10 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class=""><a href="index.html"><i class="fa fa-users" aria-hidden="true"></i> Home</a></li>
-            <li class="active"><a href="add.html"><i class="fa fa-user-plus" aria-hidden="true"></i> Add A Contact</a></li>
-            <li class=""><a href="edit.html"><i class="fa fa-user" aria-hidden="true"></i> Edit A Contact</a></li>
-            <li class=""><a href="del.html"><i class="fa fa-user-times" aria-hidden="true"></i> Delete A Contact</a></li>
+            <li class="active"><a href="index.html"><i class="fa fa-users faBorder" aria-hidden="true"></i> Home</a></li>
+            <li class=""><a href="add.html"><i class="fa fa-user-plus faBorder" aria-hidden="true"></i> Add A Contact</a></li>
+            <li class=""><a href="edit.html"><i class="fa fa-user faBorder" aria-hidden="true"></i> Edit A Contact</a></li>
+            <li class=""><a href="del.html"><i class="fa fa-user-times faBorder" aria-hidden="true"></i> Delete A Contact</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <form class="form-inline">
@@ -52,34 +47,21 @@
       </div>
     </nav>
 
-    <div class="container addContact">
-      <h1><i class="fa fa-user-plus" aria-hidden="true"></i> Add A Contact</h1>
-      <form class="form" id="addContact">
-        <div class="form-group has-feedback" id="fnameGroup">
-          <label for="fname">First Name: <i class="fa fa-asterisk" aria-hidden="true"></i></label>
-          <input type="text" class="form-control" id="fname" name="fname" placeholder="First Name" />
-        </div>
-        <div class="form-group has-feedback" id="lnameGroup">
-          <label for="lname">Last Name: <i class="fa fa-asterisk" aria-hidden="true"></i></label>
-          <input type="text" class="form-control" id="lname" name="lname" placeholder="Last Name" />
-        </div>
-        <div class="form-group" id="emailGroup">
-          <label for="email">Email Address:</label>
-          <input type="email" class="form-control" id="email" name="email" placeholder="email@address.com" />
-        </div>
-        <div class="form-group" id="phoneGroup">
-          <label for="phone">Phone Number:</label>
-          <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone 333-333-4444" />
-        </div>
-        <div class="form-group" id="addressGroup">
-          <label for="address">Address:</label>
-          <textarea class="form-control" rows="3" id="address" name="address"></textarea>
-        </div>
-        <div class="form-group">
-          <input type="submit" value="Add Contact" class="btn btn-primary" />
-          <input type="reset" value="Clear Form" class="btn btn-default" />
-        </div>
-      </form>
+    <div class="container" id="homeList">
+      <h1><i class="fa fa-users faBorder" aria-hidden="true"></i> Contact Manager</h1>
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th></th>
+          <th>Contact Name</th>
+          <th>Phone</th>
+          <th>Email</th>
+          <th class='text-right'>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="contactList">
+      </tbody>
+      </table>
     </div>
 
     <!-- Latest compiled and minified JavaScript -->
