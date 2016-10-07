@@ -27,22 +27,30 @@ switch(bod)
     if( contacts.length != 0 ) {
       for( var i = 0; i < contacts.length; i++ ){
         var contact = contacts[i];
-        var rowid = "row" + contact.id;
-        var editA = '<a href="edit.html?id=' + contact.id + '">';
-        var tr = "<tr id='" + rowid + "'>";
-        tr += "<td>" + editA + btnContact + "</a></td>";
-        tr += "<td>" + editA + contact.fname + " " + contact.lname + "</a></td>";
-        tr += "<td>" + contact.phone + "</td>";
-        tr += "<td>" + contact.email + "</td>";
-        tr += "<td class='text-right'>";
-        tr += editA + btnEdit + '</a>';
-        tr += ' ';
-        tr += '<a href="delete.html?id=' + contact.id + '">' + btnDel + '</a>';
-        tr += "</td>";
-        tr + "</tr>";
+        var tr =  '<tr id="row'+contact.id+'"><td class="text-center"><button class="btn btn-default btn-sm editContact edid'+contact.id+'"><i class="fa fa-user editContact edid'+contact.id+'" aria-hidden="true"></i></button></td>';
+        tr += '<td>' + contact.fname + ' ' + contact.lname + '</td>';
+        tr += '<td>' + contact.phone + '</td>';
+        tr += '<td>' + contact.email + '</td>';
+        tr += '<td class="text-center"><button class="btn btn-default btn-sm editContact edid'+contact.id+'"><i class="fa fa-pencil editContact edid'+contact.id+'" aria-hidden="true"></i></button> ';
+        tr += '<button class="btn btn-default btn-sm delContact delid'+contact.id+'"><i class="fa fa-times delContact delid'+contact.id+'" aria-hidden="true"></i></button></td>';
+        tr += '</tr>';
         rows += tr;
       }
       document.getElementById('contactList').innerHTML = rows;
+
+      document.getElementById('contactList').addEventListener('click', function(e){
+        e.preventDefault();
+        if( $(e.target).hasClass('editContact') ) {
+          var id = findId( e.target, 'edit');
+          localStorage.setItem('edit', id)
+          location.assign('edit.html');
+        } else if ( $(e.target).hasClass('delContact') ) {
+          var id = findId( e.target, 'delete');
+          localStorage.setItem('delete', id)
+          location.assign('delete.html');
+        }
+      })
+
     } else {
       var display = "<tr><td colspan="+tdColSpan+" class='text-center'>"+txtNoContacts+"</td></tr>";
       $('#contactList').html(display);
@@ -156,6 +164,17 @@ function resetField(field){
 			document.getElementsByClassName('errorHelp')[0].remove();
 		}
 	}
+}
+
+function findId( target, state ) {
+  var classList = target.classList;
+  if( state == 'edit')  { var patt = /edid/i; }
+  else if( state == 'delete')   { var patt = /delid/i; }
+  for( var i = 0; i < classList.length; i++ ) {
+    var test = classList[i].search(patt);
+    if( test != -1 ) { var id = classList[i].replace(patt, ''); }
+  }
+  return id;
 }
 
 function autoGenerateID() {
