@@ -17,6 +17,7 @@ body {
 
 #contactHome #list h1 { background-color: #0f434f; padding: 5px; margin-bottom: 0px; }
 #contactAdd #addForm h1 { background-color: #4f7514; padding: 5px; }
+#contactEdit #editForm h1 { background-color: #447784; padding: 5px; }
 
 .has-error input[type=text] { background-color: #FFB4AA; }
 
@@ -24,6 +25,9 @@ body {
 .addContact .btn-primary { background-image: linear-gradient(#9DC462, #4f7514, 60%, #4F7514); }
 .addContact .btn-primary:hover { background-color: #4F7514; }
 .addContact .btn-primary:active, .addContact .btn-primary:focus { background-color: #4f7514; }
+.editContact .btn-primary { background-image: linear-gradient(#447784, #6B949E, 60%, #012B35); }
+.editContact .btn-primary:hover { background-color: #447784; }
+.editContact .btn-primary:active, .addContact .btn-primary:focus { background-color: #447784; }
 
 /* colors
 *** Primary color: Red

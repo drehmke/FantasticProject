@@ -2,12 +2,10 @@
 var contacts = [];
 var tdColSpan = 5;
 var storage = 'contacts';
+var storageEdit = 'edit';
+var storageDel = 'delete';
 var groupName = "Group";
 var classFail = 'has-error';
-
-var btnContact = '<i class="fa fa-user" aria-hidden="true"></i>';
-var btnEdit = '<i class="fa fa-pencil" aria-hidden="true"></i>';
-var btnDel = '<i class="fa fa-times" aria-hidden="true"></i>';
 
 var txtNoContacts = "There are no contacts. You should go make some friends. Use the 'Add A Contact' link to add one of your new friends!";
 var txtErrorFname = 'Please enter a first name for this contact';
@@ -42,11 +40,11 @@ switch(bod)
         e.preventDefault();
         if( $(e.target).hasClass('editContact') ) {
           var id = findId( e.target, 'edit');
-          localStorage.setItem('edit', id)
+          localStorage.setItem(storageEdit, id)
           location.assign('edit.html');
         } else if ( $(e.target).hasClass('delContact') ) {
           var id = findId( e.target, 'delete');
-          localStorage.setItem('delete', id)
+          localStorage.setItem(storageDel, id)
           location.assign('delete.html');
         }
       })
@@ -97,32 +95,69 @@ switch(bod)
     // Everything's cool, add our contact
     $('#addContact').submit(function(e){
       e.preventDefault();
-      createNewContact( $('#fname').val(), $('#lname').val(), $('#phone').val(), $('#email').val(), JSON.stringify($('#address').val()) );
+      var newContact = new Contact( $('#fname').val(), $('#lname').val(), $('#phone').val(), $('#email').val(), $('#street').val(), $('#city').val(), $('#state').val(), $('#zip').val() );
+      contacts.push(newContact);
+      var prep = JSON.stringify(contacts);
+      localStorage.setItem(storage, prep);
+
       location.replace('index.html');
     })
 
     break;
   case "contactEdit": // Edit Contact ------------------------------------------
+    // Step 1 - Fill in the form with the contact info
+    // pull localStorage edit id
+    var editID = localStorage.getItem(storageEdit);
+    var editContact;
+    // loop through the array to find the object we want, fill in the forms
+    for( var i = 0; i < contacts.length; i++ ) {
+      if( contacts[i].id == editID ) { editContact = contacts[i]; }
+    }
+    $('#fname').val(editContact.fname);
+    $('#fname').focus();
+    $('#lname').val(editContact.lname);
+    $('#phone').val(editContact.phone);
+    $('#email').val(editContact.email);
+    $('#street').val(editContact.street);
+    $('#city').val(editContact.city);
+    $('#state').val(editContact.state);
+    $('#zip').val(editContact.zip);
+    // Step 2 - Update the object - we should still have the edit ID in localStorage
+    $('#editContact').submit(function(e){
+      e.preventDefault();
+      console.log('Updating contact');
+      for( var i = 0; i < contacts.length; i++ ) {
+        if( contacts[i].id == editID ) {
+          // compare everything and only update what changed
+          if( contacts[i].fname != $('#fname').val() )    { contacts[i].fname = $('#fname').val(); console.log('Updating ' + contacts[i].fname + ' to ' +  $('#fname').val());}
+          if( contacts[i].lname != $('#lname').val() )    { contacts[i].lname = $('#lname').val(); console.log('Updating ' + contacts[i].lname + ' to ' +  $('#lname').val());}
+          if( contacts[i].phone != $('#phone').val() )    { contacts[i].phone = $('#phone').val(); console.log('Updating ' + contacts[i].phone + ' to ' +  $('#phone').val());}
+          if( contacts[i].email != $('#email').val() )    { contacts[i].email = $('#email').val(); console.log('Updating ' + contacts[i].email + ' to ' +  $('#email').val());}
+          if( contacts[i].street != $('#street').val() )  { contacts[i].street = $('#street').val(); console.log('Updating ' + contacts[i].street + ' to ' +  $('#street').val());}
+          if( contacts[i].city != $('#city').val() )      { contacts[i].city = $('#city').val(); console.log('Updating ' + contacts[i].city + ' to ' +  $('#city').val());}
+          if( contacts[i].state != $('#state').val() )    { contacts[i].state = $('#state').val(); console.log('Updating ' + contacts[i].state + ' to ' +  $('#state').val());}
+          if( contacts[i].zip != $('#zip').val() )        { contacts[i].zip = $('#zip').val(); console.log('Updating ' + contacts[i].zip + ' to ' +  $('#zip').val());}
+        }
+      }
+      console.log(contacts);
+      var update = JSON.stringify(contacts);
+      localStorage.setItem(storage, update);
+      // delete from localStorage so we don't have random edits
+      localStorage.removeItem(storageEdit);
+
+      location.replace('index.html');
+    })
     break;
   case "contactDelete": // Delete Contact --------------------------------------
+    // pull localStorage delete id
+    // loop through contacts array and remove the one matching the id
     break;
 }
 
 /* ---- Helper Functions ---------------------------------------------------- */
-function createNewContact( fname, lname, phone, email, address ) {
-  // Before we get too far, I want to take the "'s from around the stringified address
-  var test = address.slice(1, (address.length - 1 ));
-  console.log(test);
-  // create our object
-  var newContact = new Contact( fname, lname, phone, email, address );
-  // add it to our existing array and then to localStorage
-  contacts.push(newContact);
-  var prep = JSON.stringify(contacts);
-  localStorage.setItem(storage, prep);
-}
-
 function validationFailed(field) {
 	// add a class to the group
+  // TODO: validate state is 2 letters
 	var groupID = field + groupName;
 	var test = document.getElementById(groupID);
 	var classes = test.getAttribute('class');
@@ -182,11 +217,14 @@ function autoGenerateID() {
 }
 
 /* ---- Prototypes ---------------------------------------------------------- */
-function Contact(fname, lname, phone, email, address) {
+function Contact(fname, lname, phone, email, street, city, state, zip) {
   this.id = autoGenerateID();
   this.fname = fname;
   this.lname = lname;
   this.phone = phone;
   this.email = email;
-  this.address = address;
+  this.street = street;
+  this.city = city;
+  this.state = state;
+  this.zip = zip;
 }
