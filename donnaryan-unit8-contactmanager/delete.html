@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Contact Manager</title>
+    <title>Delete A Contact - Contact Manager</title>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <!-- Optional theme -->
@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="contacts.css" type="text/css" />
   </head>
 
-  <body id="contactHome">
+  <body id="contactDelete">
     <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
@@ -26,10 +26,10 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="index.html"><i class="fa fa-users faBorder" aria-hidden="true"></i> Home</a></li>
+            <li class=""><a href="index.html"><i class="fa fa-users faBorder" aria-hidden="true"></i> Home</a></li>
             <li class=""><a href="add.html"><i class="fa fa-user-plus faBorder" aria-hidden="true"></i> Add A Contact</a></li>
             <li class=""><a href="edit.html"><i class="fa fa-user faBorder" aria-hidden="true"></i> Edit A Contact</a></li>
-            <li class=""><a href="delete.html"><i class="fa fa-user-times faBorder" aria-hidden="true"></i> Delete A Contact</a></li>
+            <li class="active"><a href="delete.html"><i class="fa fa-user-times faBorder" aria-hidden="true"></i> Delete A Contact</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <form class="form-inline">
@@ -48,21 +48,18 @@
       </div>
     </nav>
 
-    <div class="container" id="list">
-      <h1><i class="fa fa-users faBorder" aria-hidden="true"></i> Contact Manager</h1>
-      <table class="table table-striped">
-        <thead>
-        <tr>
-          <th></th>
-          <th>Contact Name</th>
-          <th>Phone</th>
-          <th>Email</th>
-          <th class='text-center'>Actions</th>
-        </tr>
-      </thead>
-      <tbody id="contactList">
-      </tbody>
-      </table>
+    <div class="container deleteContact" id="deleteForm">
+      <h1><i class="fa fa-user-times faBorder" aria-hidden="true"></i> Delete A Contact</h1>
+      <form class="form" id="deleteContact">
+        <h2>Are You Sure?</h2>
+        <p>You will be deleting this contact and all their information ...</p>
+        <div id="contactToDelete">
+        </div>
+        <div class="form-group">
+          <input type="submit" value="Delete Contact" class="btn btn-primary" />
+          <input type="reset" value="Cancel" class="btn btn-default" />
+        </div>
+      </form>
     </div>
 
     <!-- Latest compiled and minified JavaScript -->

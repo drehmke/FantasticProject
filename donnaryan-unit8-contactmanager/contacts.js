@@ -150,7 +150,35 @@ switch(bod)
     break;
   case "contactDelete": // Delete Contact --------------------------------------
     // pull localStorage delete id
+    var delID = localStorage.getItem(storageDel);
+    // display confirmation info
+    var delContact;
+    for( var i = 0; i < contacts.length; i++ ) {
+      if( contacts[i].id == delID ) { delContact = contacts[i]; }
+    }
+    var address = delContact.fname + " " +delContact.lname + "<br />";
+    if( delContact.phone != '' ) { address += delContact.phone + "<br />"; }
+    if( delContact.email != '' ) { address += delContact.email + "<br />"; }
+    if( delContact.street != '' ) { address += delContact.street + "<br />"; }
+    if( delContact.city != '' ) { address += delContact.city + ", " + delContact.state + " " + delContact.zip + "<br />"; }
+    document.getElementById('contactToDelete').innerHTML = address;
+
     // loop through contacts array and remove the one matching the id
+    $('#deleteContact').submit(function(e){
+      e.preventDefault();
+      var newContacts = [];
+      var delID = localStorage.getItem(storageDel);
+      console.log(delID);
+      for( var i = 0; i < contacts.length; i++ ) {
+        if( contacts[i].id != delID ) { newContacts.push(contacts[i]); }
+      }
+      contacts = newContacts;
+      var update = JSON.stringify(contacts);
+      localStorage.setItem(storage, update);
+      localStorage.removeItem(storageDel);
+
+      location.replace('index.html');
+    })
     break;
 }
 

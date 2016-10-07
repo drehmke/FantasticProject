@@ -4,6 +4,7 @@ body {
 
 .navbar-default .navbar-nav > .active > a { color: #0F434F; }
 .has-feedback label~.form-control-feedback { top: 35px; }
+.deleteContact .form-group { margin-top: 10px; }
 
 /* Font Awesome icons */
 .faBorder       { text-shadow: -1px -1px 0 #a9a9a9, 1px -1px 0 #a9a9a9, -1px  1px 0 #a9a9a9, 1px  1px 0 #a9a9a9; }
@@ -18,6 +19,7 @@ body {
 #contactHome #list h1 { background-color: #0f434f; padding: 5px; margin-bottom: 0px; }
 #contactAdd #addForm h1 { background-color: #4f7514; padding: 5px; }
 #contactEdit #editForm h1 { background-color: #447784; padding: 5px; }
+#contactDelete .deleteContact h1 { background-color: #AA4639; padding: 5px; }
 
 .has-error input[type=text] { background-color: #FFB4AA; }
 
@@ -25,32 +27,9 @@ body {
 .addContact .btn-primary { background-image: linear-gradient(#9DC462, #4f7514, 60%, #4F7514); }
 .addContact .btn-primary:hover { background-color: #4F7514; }
 .addContact .btn-primary:active, .addContact .btn-primary:focus { background-color: #4f7514; }
-.editContact .btn-primary { background-image: linear-gradient(#447784, #6B949E, 60%, #012B35); }
+.editContact .btn-primary { background-image: linear-gradient(#012B35, #6B949E, 60%, #447784); }
 .editContact .btn-primary:hover { background-color: #447784; }
 .editContact .btn-primary:active, .addContact .btn-primary:focus { background-color: #447784; }
-
-/* colors
-*** Primary color: Red
-
-   shade 0 = #AA4639 = rgb(170, 70, 57) = rgba(170, 70, 57,1) = rgb0(0.667,0.275,0.224)
-   shade 1 = #FFB4AA = rgb(255,180,170) = rgba(255,180,170,1) = rgb0(1,0.706,0.667)
-   shade 2 = #D4776A = rgb(212,119,106) = rgba(212,119,106,1) = rgb0(0.831,0.467,0.416)
-   shade 3 = #802215 = rgb(128, 34, 21) = rgba(128, 34, 21,1) = rgb0(0.502,0.133,0.082)
-   shade 4 = #550A00 = rgb( 85, 10,  0) = rgba( 85, 10,  0,1) = rgb0(0.333,0.039,0)
-
-*** Secondary color (1): Blue
-
-   shade 0 = #255C69 = rgb( 37, 92,105) = rgba( 37, 92,105,1) = rgb0(0.145,0.361,0.412)
-   shade 1 = #6B949E = rgb(107,148,158) = rgba(107,148,158,1) = rgb0(0.42,0.58,0.62)
-   shade 2 = #447784 = rgb( 68,119,132) = rgba( 68,119,132,1) = rgb0(0.267,0.467,0.518)
-   shade 3 = #0F434F = rgb( 15, 67, 79) = rgba( 15, 67, 79,1) = rgb0(0.059,0.263,0.31)
-   shade 4 = #012B35 = rgb(  1, 43, 53) = rgba(  1, 43, 53,1) = rgb0(0.004,0.169,0.208)
-
-*** Secondary color (2): Green
-
-   shade 0 = #739D34 = rgb(115,157, 52) = rgba(115,157, 52,1) = rgb0(0.451,0.616,0.204)
-   shade 1 = #CCEB9D = rgb(204,235,157) = rgba(204,235,157,1) = rgb0(0.8,0.922,0.616)
-   shade 2 = #9DC462 = rgb(157,196, 98) = rgba(157,196, 98,1) = rgb0(0.616,0.769,0.384)
-   shade 3 = #4F7514 = rgb( 79,117, 20) = rgba( 79,117, 20,1) = rgb0(0.31,0.459,0.078)
-   shade 4 = #2F4E00 = rgb( 47, 78,  0) = rgba( 47, 78,  0,1) = rgb0(0.184,0.306,0)
-*/
+.deleteContact .btn-primary { background-image: linear-gradient(#550A00, #D4776A, 60%, #AA4639); }
+.deleteContact .btn-primary:hover { background-color: #AA4639; }
+.deleteContact .btn-primary:active, .addContact .btn-primary:focus { background-color: #AA4639; }
