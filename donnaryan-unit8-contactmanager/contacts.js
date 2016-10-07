@@ -8,16 +8,18 @@ var groupName = "Group";
 var classFail = 'has-error';
 
 var txtNoContacts = "There are no contacts. You should go make some friends. Use the 'Add A Contact' link to add one of your new friends!";
+var txtErrorReq   = 'Please enter a first and last name for your contact, so you know who they are!';
 var txtErrorFname = 'Please enter a first name for this contact';
 var txtErrorLname = 'Please enter a last name for this contact';
 var txtErrorPhone = 'The number provided was not the correct format. Please add it in as 333-333-4444';
 var txtErrorEmail = 'The email address provided was not in the correct format. Please use the format email@address.com';
+var txtErrorState = 'Please only enter two letters for your state.';
+var txtErrorZip   = 'Please make sure your zip code is 5 numbers.';
 
 /* ---- The Fun Stuff! ------------------------------------------------------ */
 if( localStorage.contacts ) { contacts = JSON.parse(localStorage.contacts); }
 console.log( "Contacts length: " + contacts.length);
 var bod = document.body.getAttribute('id');
-console.log(bod);
 switch(bod)
 {
   case "contactHome": // Home Page ---------------------------------------------
@@ -59,48 +61,33 @@ switch(bod)
       $('#fname').focus();
     })
     // Validations
-    $('#fname').on('blur', function(e) {
-      e.preventDefault();
-      if( $('#fname').val() == '' ) { validationFailed('fname'); }
-    })
-    $('#fname').on('change', function(e){ e.preventDefault(); resetField('fname'); })
+    validateFields();
 
     $('#lname').on('blur', function(e){
-      e.preventDefault();
-      if( $('#lname').val() == '') { validationFailed('lname'); }
-    })
-    $('#lname').on('change', function(e){ e.preventDefault(); resetField('lname'); })
-
-    $('#phone').on('blur', function(e){
-      e.preventDefault();
-      var phone = $('#phone').val();
-      if( phone != '' ){
-        var format = /\d{3}-\d{3}-\d{4}/;
-        var passFail = format.test(phone);
-        if( passFail == false ) { validationFailed('phone'); }
+      if( $('fname').val() != '' && $('lname').val() != '' )
+      {
+        if( document.getElementById('errorForm').innerHTML != '') {
+          document.getElementById('errorForm').style.display = "none";
+          document.getElementById('errorForm').innerHTML = '';
+        }
       }
     })
-    $('#phone').on('change', function(e){ e.preventDefault(); resetField('phone'); })
-    $('#email').on('blur', function(e){
-    	e.preventDefault();
-    	var email = $('#email').val();
-    	if( email != '' ){
-    		var format = /\S{2,}@\S{2,}.[a-z]{2,}/;
-    		var passFail = format.test(email);
-    		if( passFail == false ) { validationFailed('email'); }
-    	}
-    })
-    $('#email').on('change', function(e){ e.preventDefault(); resetField('email'); })
 
     // Everything's cool, add our contact
     $('#addContact').submit(function(e){
       e.preventDefault();
-      var newContact = new Contact( $('#fname').val(), $('#lname').val(), $('#phone').val(), $('#email').val(), $('#street').val(), $('#city').val(), $('#state').val(), $('#zip').val() );
-      contacts.push(newContact);
-      var prep = JSON.stringify(contacts);
-      localStorage.setItem(storage, prep);
 
-      location.replace('index.html');
+      if( $('fname').val() != undefined && $('lname').val() != undefined  ) {
+        var newContact = new Contact( $('#fname').val(), $('#lname').val(), $('#phone').val(), $('#email').val(), $('#street').val(), $('#city').val(), $('#state').val(), $('#zip').val() );
+        contacts.push(newContact);
+        var prep = JSON.stringify(contacts);
+        localStorage.setItem(storage, prep);
+
+        location.replace('index.html');
+      } else {
+        document.getElementById('errorForm').innerHTML = txtErrorReq;
+        document.getElementById('errorForm').style.display = 'block';
+      }
     })
 
     break;
@@ -176,6 +163,7 @@ switch(bod)
       var update = JSON.stringify(contacts);
       localStorage.setItem(storage, update);
       localStorage.removeItem(storageDel);
+      if( contacts.length == 0 ) { localStorage.removeItem(storage); }
 
       location.replace('index.html');
     })
@@ -183,6 +171,55 @@ switch(bod)
 }
 
 /* ---- Helper Functions ---------------------------------------------------- */
+function validateFields(){
+  $('#fname').on('blur', function(e) {
+    e.preventDefault();
+    if( $('#fname').val() == '' ) { validationFailed('fname'); }
+  })
+  $('#fname').on('change', function(e){ e.preventDefault(); resetField('fname'); })
+
+  $('#lname').on('blur', function(e){
+    e.preventDefault();
+    if( $('#lname').val() == '') { validationFailed('lname'); }
+  })
+  $('#lname').on('change', function(e){ e.preventDefault(); resetField('lname'); })
+
+  $('#phone').on('blur', function(e){
+    e.preventDefault();
+    var phone = $('#phone').val();
+    if( phone != '' ){
+      var format = /\d{3}-\d{3}-\d{4}/;
+      var passFail = format.test(phone);
+      if( passFail == false ) { validationFailed('phone'); }
+    }
+  })
+  $('#phone').on('change', function(e){ e.preventDefault(); resetField('phone'); })
+  $('#email').on('blur', function(e){
+    e.preventDefault();
+    var email = $('#email').val();
+    if( email != '' ){
+      var format = /\S{2,}@\S{2,}.[a-z]{2,}/;
+      var passFail = format.test(email);
+      if( passFail == false ) { validationFailed('email'); }
+    }
+  })
+  $('#email').on('change', function(e){ e.preventDefault(); resetField('email'); })
+
+  $('#state').on('blur', function(e){
+    e.preventDefault();
+    var state = $('#state').val();
+    if( state.length > 2 ) { validationFailed('state'); }
+  })
+  $('#state').on('change', function(e){ e.preventDefault(); resetField('state'); })
+
+  $('#zip').on('blur', function(e) {
+    e.preventDefault();
+    var zipPatt = /\d{5}/;
+    var testResults = zipPatt.test($('#zip').val());
+    if( testResults === false ) { validationFailed('zip'); }
+  })
+  $('#zip').on('change', function(e){ e.preventDefault(); resetField('zip'); })
+}
 function validationFailed(field) {
 	// add a class to the group
   // TODO: validate state is 2 letters
@@ -200,6 +237,8 @@ function validationFailed(field) {
 			break;
 		case "phone":
 		case "email":
+    case "state":
+    case "zip":
 			var errorHelpExists = document.getElementsByClassName('errorHelp');
 			if( errorHelpExists.length == 0) {
 				var div = document.createElement('div');
@@ -209,6 +248,8 @@ function validationFailed(field) {
 			}
 			if( field == "phone")					{ div.innerHTML = txtErrorPhone; }
 			else if ( field == "email" )	{ div.innerHTML = txtErrorEmail; }
+      else if ( field == "state" )	{ div.innerHTML = txtErrorState; }
+      else if ( field == "zip" )	  { div.innerHTML = txtErrorZip; }
 
 			document.getElementById(field + groupName).appendChild(div);
 			break;
@@ -221,12 +262,18 @@ function resetField(field){
 	classes = classes.replace(classFail, '');
 	document.getElementById(groupId).setAttribute('class', classes);
 
-	if( field == 'phone' || field == 'email') {
-		var errorHelps = document.getElementsByClassName('errorHelp')
-		if( errorHelps.length == 1 ){
-			document.getElementsByClassName('errorHelp')[0].remove();
-		}
-	}
+  switch(field)
+  {
+    case 'phone':
+    case 'email':
+    case 'state':
+    case 'zip':
+      var errorHelps = document.getElementsByClassName('errorHelp')
+  		if( errorHelps.length == 1 ){
+  			document.getElementsByClassName('errorHelp')[0].remove();
+  		}
+      break;
+  }
 }
 
 function findId( target, state ) {
