@@ -26,7 +26,17 @@ switch(bod)
   case "contactHome": // Home Page ---------------------------------------------
     var rows = '';
     if( contacts.length != 0 ) {
-      rows = formatTableRow(contacts);
+      for( var i = 0; i < contacts.length; i++ ){
+        var contact = contacts[i];
+        var tr =  '<tr id="row'+contact.id+'"><td class="text-center"><button class="btn btn-default btn-sm editContact edid'+contact.id+'"><i class="fa fa-user editContact edid'+contact.id+'" aria-hidden="true"></i></button></td>';
+        tr += '<td>' + contact.fname + ' ' + contact.lname + '</td>';
+        tr += '<td>' + contact.phone + '</td>';
+        tr += '<td>' + contact.email + '</td>';
+        tr += '<td class="text-center"><button class="btn btn-default btn-sm editContact edid'+contact.id+'"><i class="fa fa-pencil editContact edid'+contact.id+'" aria-hidden="true"></i></button> ';
+        tr += '<button class="btn btn-default btn-sm delContact delid'+contact.id+'"><i class="fa fa-times delContact delid'+contact.id+'" aria-hidden="true"></i></button></td>';
+        tr += '</tr>';
+        rows += tr;
+      }
       document.getElementById('contactList').innerHTML = rows;
 
       document.getElementById('contactList').addEventListener('click', function(e){
@@ -197,24 +207,9 @@ function search( searchTerm ) {
     if( contact.state == searchTerm )   { match = true; }
     if( contact.zip == searchTerm )     { match = true; }
 
-
+    if( match === true )  { document.getElementById('row' + contact.id).style.display = ''; }
+    else                  { document.getElementById('row' + contact.id).style.display = "none"; }
   }
-}
-
-function formatTableRow(contacts) {
-  var rows;
-  for( var i = 0; i < contacts.length; i++ ){
-    var contact = contacts[i];
-    var tr =  '<tr id="row'+contact.id+'"><td class="text-center"><button class="btn btn-default btn-sm editContact edid'+contact.id+'"><i class="fa fa-user editContact edid'+contact.id+'" aria-hidden="true"></i></button></td>';
-    tr += '<td>' + contact.fname + ' ' + contact.lname + '</td>';
-    tr += '<td>' + contact.phone + '</td>';
-    tr += '<td>' + contact.email + '</td>';
-    tr += '<td class="text-center"><button class="btn btn-default btn-sm editContact edid'+contact.id+'"><i class="fa fa-pencil editContact edid'+contact.id+'" aria-hidden="true"></i></button> ';
-    tr += '<button class="btn btn-default btn-sm delContact delid'+contact.id+'"><i class="fa fa-times delContact delid'+contact.id+'" aria-hidden="true"></i></button></td>';
-    tr += '</tr>';
-    rows += tr;
-  }
-  return rows;
 }
 
 function validateFields(){
