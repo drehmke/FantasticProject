@@ -49,7 +49,7 @@
     </nav>
 
     <div class="container editContact" id="editForm">
-      <h1><i class="fa fa-user faBorder" aria-hidden="true"></i> Edit A Contact</h1>
+      <h1><i class="fa fa-user faBorder" aria-hidden="true"></i> Edit A Contact <span class='pull-right contactSelect' id='editSelect'></span></h1>
       <form class="form" id="editContact">
         <div class="form-group has-feedback" id="fnameGroup">
           <label for="fname">First Name: <i class="fa fa-asterisk" aria-hidden="true"></i></label>
@@ -67,20 +67,20 @@
           <label for="email">Email Address:</label>
             <input type="email" class="form-control" id="email" name="email" placeholder="email@address.com" />
         </div>
-        <div class="form-group" id="addressGroup">
+        <div class="form-group" id="streetGroup">
           <label for="street">Street Address:</label>
           <input type="text" class="form-control" id="street" name="street" placeholder="Street Address" />
         </div>
         <div class="row">
-        <div class="form-group col-sm-6" id="addressGroup">
+        <div class="form-group col-sm-6" id="cityGroup">
           <label for="city">City:</label>
           <input type="text" class="form-control" id="city" name="city" placeholder="City" />
         </div>
-        <div class="form-group col-sm-3" id="addressGroup">
+        <div class="form-group col-sm-3" id="stateGroup">
           <label for="state">State:</label>
           <input type="text" class="form-control" id="state" name="state" placeholder="ST" />
         </div>
-        <div class="form-group col-sm-3" id="addressGroup">
+        <div class="form-group col-sm-3" id="zipGroup">
           <label for="zip">Zip:</label>
           <input type="text" class="form-control" id="zip" name="zip" placeholder="Zip Code" />
         </div>

@@ -15,6 +15,7 @@ var txtErrorPhone = 'The number provided was not the correct format. Please add 
 var txtErrorEmail = 'The email address provided was not in the correct format. Please use the format email@address.com';
 var txtErrorState = 'Please only enter two letters for your state.';
 var txtErrorZip   = 'Please make sure your zip code is 5 numbers.';
+var txtSelectContact = 'Select A Contact';
 
 /* ---- The Fun Stuff! ------------------------------------------------------ */
 if( localStorage.contacts ) { contacts = JSON.parse(localStorage.contacts); }
@@ -42,11 +43,11 @@ switch(bod)
         e.preventDefault();
         if( $(e.target).hasClass('editContact') ) {
           var id = findId( e.target, 'edit');
-          localStorage.setItem(storageEdit, id)
+          localStorage.setItem(storageEdit, id);
           location.assign('edit.html');
         } else if ( $(e.target).hasClass('delContact') ) {
           var id = findId( e.target, 'delete');
-          localStorage.setItem(storageDel, id)
+          localStorage.setItem(storageDel, id);
           location.assign('delete.html');
         }
       })
@@ -77,7 +78,7 @@ switch(bod)
     $('#addContact').submit(function(e){
       e.preventDefault();
 
-      if( $('fname').val() != undefined && $('lname').val() != undefined  ) {
+      if( $('fname').val() != '' && $('lname').val() != ''  ) {
         var newContact = new Contact( $('#fname').val(), $('#lname').val(), $('#phone').val(), $('#email').val(), $('#street').val(), $('#city').val(), $('#state').val(), $('#zip').val() );
         contacts.push(newContact);
         var prep = JSON.stringify(contacts);
@@ -92,27 +93,28 @@ switch(bod)
 
     break;
   case "contactEdit": // Edit Contact ------------------------------------------
-    // Step 1 - Fill in the form with the contact info
-    // pull localStorage edit id
-    var editID = localStorage.getItem(storageEdit);
-    var editContact;
-    // loop through the array to find the object we want, fill in the forms
-    for( var i = 0; i < contacts.length; i++ ) {
-      if( contacts[i].id == editID ) { editContact = contacts[i]; }
+    var editID;
+    if( localStorage.getItem(storageEdit) ) {
+      editID = localStorage.getItem(storageEdit);
+      fillOutContact(editID, 'edit');
+    } else {
+      // we don't have a stored edit id, show a select of all the contacts
+      var select = buildContactSelect('selectEdit');
+      $('#editSelect').append(select);
+
+      var editSelect = document.getElementById('selectEdit');
+      editSelect.addEventListener('change', function(e){
+        e.preventDefault();
+        editID = editSelect.value
+        fillOutContact(editID, 'edit');
+        localStorage.setItem(storageEdit, editID);
+      })
     }
-    $('#fname').val(editContact.fname);
-    $('#fname').focus();
-    $('#lname').val(editContact.lname);
-    $('#phone').val(editContact.phone);
-    $('#email').val(editContact.email);
-    $('#street').val(editContact.street);
-    $('#city').val(editContact.city);
-    $('#state').val(editContact.state);
-    $('#zip').val(editContact.zip);
+
+    validateFields();
     // Step 2 - Update the object - we should still have the edit ID in localStorage
     $('#editContact').submit(function(e){
       e.preventDefault();
-      console.log('Updating contact');
       for( var i = 0; i < contacts.length; i++ ) {
         if( contacts[i].id == editID ) {
           // compare everything and only update what changed
@@ -130,31 +132,38 @@ switch(bod)
       var update = JSON.stringify(contacts);
       localStorage.setItem(storage, update);
       // delete from localStorage so we don't have random edits
-      localStorage.removeItem(storageEdit);
-
+      if( localStorage.getItem(storageEdit) ) { localStorage.removeItem(storageEdit); }
+      location.replace('index.html');
+    })
+    $('#editContact').on('reset', function(e){
+      if( localStorage.getItem(storageEdit) ) {localStorage.removeItem(storageEdit); }
       location.replace('index.html');
     })
     break;
   case "contactDelete": // Delete Contact --------------------------------------
-    // pull localStorage delete id
-    var delID = localStorage.getItem(storageDel);
-    // display confirmation info
-    var delContact;
-    for( var i = 0; i < contacts.length; i++ ) {
-      if( contacts[i].id == delID ) { delContact = contacts[i]; }
+    var delID;
+    if( localStorage.getItem(storageDel) ) {
+      // pull localStorage delete id
+      delID = localStorage.getItem(storageDel);
+      fillOutContact(delID, 'delete');
+    } else {
+      var select = buildContactSelect('selectDelete');
+      $('#delSelect').append(select);
+
+      var delSelect = document.getElementById('selectDelete');
+      delSelect.addEventListener('change', function(e){
+        e.preventDefault();
+        delID = delSelect.value
+        fillOutContact(delID, 'delete');
+      })
     }
-    var address = delContact.fname + " " +delContact.lname + "<br />";
-    if( delContact.phone != '' ) { address += delContact.phone + "<br />"; }
-    if( delContact.email != '' ) { address += delContact.email + "<br />"; }
-    if( delContact.street != '' ) { address += delContact.street + "<br />"; }
-    if( delContact.city != '' ) { address += delContact.city + ", " + delContact.state + " " + delContact.zip + "<br />"; }
-    document.getElementById('contactToDelete').innerHTML = address;
+    // display confirmation info
 
     // loop through contacts array and remove the one matching the id
     $('#deleteContact').submit(function(e){
       e.preventDefault();
       var newContacts = [];
-      var delID = localStorage.getItem(storageDel);
+      //var delID = localStorage.getItem(storageDel);
       console.log(delID);
       for( var i = 0; i < contacts.length; i++ ) {
         if( contacts[i].id != delID ) { newContacts.push(contacts[i]); }
@@ -162,9 +171,13 @@ switch(bod)
       contacts = newContacts;
       var update = JSON.stringify(contacts);
       localStorage.setItem(storage, update);
-      localStorage.removeItem(storageDel);
+      if( localStorage.getItem(storageDel) ) {localStorage.removeItem(storageDel); }
       if( contacts.length == 0 ) { localStorage.removeItem(storage); }
 
+      location.replace('index.html');
+    })
+    $('#deleteContact').on('reset', function(e){
+      if( localStorage.getItem(storageDel) ) {localStorage.removeItem(storageDel); }
       location.replace('index.html');
     })
     break;
@@ -285,6 +298,46 @@ function findId( target, state ) {
     if( test != -1 ) { var id = classList[i].replace(patt, ''); }
   }
   return id;
+}
+
+function buildContactSelect(id) {
+  var select = document.createElement('select');
+  select.setAttribute('id', id);
+  var option = document.createElement('option');
+  option.innerHTML = txtSelectContact;
+  select.appendChild(option);
+  for( var i = 0; i < contacts.length; i++ ){
+    var option = document.createElement('option');
+    option.setAttribute('value', contacts[i].id);
+    option.innerHTML = contacts[i].fname + " " + contacts[i].lname;
+    select.appendChild(option);
+  }
+  return select;
+}
+
+function fillOutContact(id, stage) {
+  var contact;
+  for( var i = 0; i < contacts.length; i++ ) {
+    if( contacts[i].id == id ) { contact = contacts[i]; }
+  }
+  if( stage == 'edit') {
+    $('#fname').val(contact.fname);
+    $('#fname').focus();
+    $('#lname').val(contact.lname);
+    $('#phone').val(contact.phone);
+    $('#email').val(contact.email);
+    $('#street').val(contact.street);
+    $('#city').val(contact.city);
+    $('#state').val(contact.state);
+    $('#zip').val(contact.zip);
+  } else if( stage == "delete") {
+    var address = contact.fname + " " + contact.lname + "<br />";
+    if( contact.phone != '' ) { address += contact.phone + "<br />"; }
+    if( contact.email != '' ) { address += contact.email + "<br />"; }
+    if( contact.street != '' ) { address += contact.street + "<br />"; }
+    if( contact.city != '' ) { address += contact.city + ", " + contact.state + " " + contact.zip + "<br />"; }
+    document.getElementById('contactToDelete').innerHTML = address;
+  }
 }
 
 function autoGenerateID() {
