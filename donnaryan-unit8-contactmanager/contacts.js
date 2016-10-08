@@ -26,29 +26,36 @@ switch(bod)
   case "contactHome": // Home Page ---------------------------------------------
     var rows = '';
     if( contacts.length != 0 ) {
-      for( var i = 0; i < contacts.length; i++ ){
-        var contact = contacts[i];
-        var tr =  '<tr id="row'+contact.id+'"><td class="text-center"><button class="btn btn-default btn-sm editContact edid'+contact.id+'"><i class="fa fa-user editContact edid'+contact.id+'" aria-hidden="true"></i></button></td>';
-        tr += '<td>' + contact.fname + ' ' + contact.lname + '</td>';
-        tr += '<td>' + contact.phone + '</td>';
-        tr += '<td>' + contact.email + '</td>';
-        tr += '<td class="text-center"><button class="btn btn-default btn-sm editContact edid'+contact.id+'"><i class="fa fa-pencil editContact edid'+contact.id+'" aria-hidden="true"></i></button> ';
-        tr += '<button class="btn btn-default btn-sm delContact delid'+contact.id+'"><i class="fa fa-times delContact delid'+contact.id+'" aria-hidden="true"></i></button></td>';
-        tr += '</tr>';
-        rows += tr;
-      }
+      rows = buildTableRows(contacts);
       document.getElementById('contactList').innerHTML = rows;
 
       document.getElementById('contactList').addEventListener('click', function(e){
         e.preventDefault();
-        if( $(e.target).hasClass('editContact') ) {
+        if( $(e.target).hasClass('editContact') ) {             // edit button
           var id = findId( e.target, 'edit');
           localStorage.setItem(storageEdit, id);
           location.assign('edit.html');
-        } else if ( $(e.target).hasClass('delContact') ) {
+        } else if ( $(e.target).hasClass('delContact') ) {      // delete button
           var id = findId( e.target, 'delete');
           localStorage.setItem(storageDel, id);
           location.assign('delete.html');
+        } else if( $(e.target).hasClass('email-link') ) {       // email link
+          var id = findId( e.target, 'email');
+          for( var i = 0; i < contacts.length; i++ ) {
+            if( contacts[i].id == id ) {
+              var mailto = 'mailto:' + contacts[i].email;
+              var mailWindow = window.open(mailto);
+            }
+          }
+        } else if( $(e.target).hasClass('map-link') ) {         // map link
+          var id = findId( e.target, 'maps' );
+          for( var i = 0; i < contacts.length; i++ ) {
+            if( contacts[i].id == id ) {
+              var address = contacts[i].street + "+" + contacts[i].city + "+" + contacts[i].state + "+" + contacts[i].zip;
+              var maplink = 'https://maps.google.com?q='+address;
+              var mapWin = window.open(maplink);
+            }
+          }
         }
       })
 
@@ -75,11 +82,20 @@ switch(bod)
     })
 
     // Everything's cool, add our contact
-    $('#addContact').submit(function(e){
+    document.getElementById('addContact').addEventListener('submit', function(e) {
+    //$('#addContact').submit(function(e){
       e.preventDefault();
-
-      if( $('fname').val() != '' && $('lname').val() != ''  ) {
-        var newContact = new Contact( $('#fname').val(), $('#lname').val(), $('#phone').val(), $('#email').val(), $('#street').val(), $('#city').val(), $('#state').val(), $('#zip').val() );
+      var fname   = document.getElementById('fname').value;
+      var lname   = document.getElementById('lname').value;
+      var phone   = document.getElementById('phone').value;
+      var email   = document.getElementById('email').value;
+      var street  = document.getElementById('street').value;
+      var city    = document.getElementById('city').value;
+      var state   = document.getElementById('state').value;
+      var zip     = document.getElementById('zip').value;
+      console.log(fname + " - " + lname);
+      if( fname != '' && lname != ''  ) {
+        var newContact = new Contact( fname, lname, phone, email, street, city, state, zip);
         contacts.push(newContact);
         var prep = JSON.stringify(contacts);
         localStorage.setItem(storage, prep);
@@ -94,7 +110,12 @@ switch(bod)
     break;
   case "contactEdit": // Edit Contact ------------------------------------------
     var editID;
-    if( localStorage.getItem(storageEdit) ) {
+    if( location.search ){
+      editID = findId(location.search, 'get');
+      fillOutContact(editID, 'edit');
+      localStorage.setItem(storageEdit, editID);
+    }
+    else if( localStorage.getItem(storageEdit) ) {
       editID = localStorage.getItem(storageEdit);
       fillOutContact(editID, 'edit');
     } else {
@@ -128,7 +149,6 @@ switch(bod)
           if( contacts[i].zip != $('#zip').val() )        { contacts[i].zip = $('#zip').val(); console.log('Updating ' + contacts[i].zip + ' to ' +  $('#zip').val());}
         }
       }
-      console.log(contacts);
       var update = JSON.stringify(contacts);
       localStorage.setItem(storage, update);
       // delete from localStorage so we don't have random edits
@@ -163,8 +183,6 @@ switch(bod)
     $('#deleteContact').submit(function(e){
       e.preventDefault();
       var newContacts = [];
-      //var delID = localStorage.getItem(storageDel);
-      console.log(delID);
       for( var i = 0; i < contacts.length; i++ ) {
         if( contacts[i].id != delID ) { newContacts.push(contacts[i]); }
       }
@@ -195,21 +213,69 @@ $('#searchButton').on('click', function(e) {
 
 /* ---- Helper Functions ---------------------------------------------------- */
 function search( searchTerm ) {
+  var results = [];
   for( var i = 0; i < contacts.length; i++ ) {
-    var contact = contacts[i];
     var match = false;
-    if( contact.fname == searchTerm )   { match = true; }
-    if( contact.lname == searchTerm )   { match = true; }
-    if( contact.phone == searchTerm )   { match = true; }
-    if( contact.email == searchTerm )   { match = true; }
-    if( contact.street == searchTerm )  { match = true; } // TODO: fuzzy search
-    if( contact.city == searchTerm )    { match = true; }
-    if( contact.state == searchTerm )   { match = true; }
-    if( contact.zip == searchTerm )     { match = true; }
+    if( contacts[i].fname == searchTerm )   { match = true; }
+    if( contacts[i].lname == searchTerm )   { match = true; }
+    if( contacts[i].phone == searchTerm )   { match = true; }
+    if( contacts[i].email == searchTerm )   { match = true; }
+    if( contacts[i].street == searchTerm )  { match = true; } // TODO: fuzzy search
+    if( contacts[i].city == searchTerm )    { match = true; }
+    if( contacts[i].state == searchTerm )   { match = true; }
+    if( contacts[i].zip == searchTerm )     { match = true; }
 
-    if( match === true )  { document.getElementById('row' + contact.id).style.display = ''; }
-    else                  { document.getElementById('row' + contact.id).style.display = "none"; }
+    if( match === true )  { results.push(contacts[i]); }
   }
+  if( results.length > 0 ) {
+    document.getElementById('searchModalLabel').innerHTML = "Search Results";
+    var table = '<table class="table table-striped table-sm">';
+    table += '<thead><tr><th></th><th>Contact Name</th><th>Phone</th><th>Email</th><th class="text-center">Actions</th></tr></thead><tbody>';
+    table += buildResultsRows( results );
+    table += '</tbody></table>';
+    document.getElementById('searchModalBody').innerHTML = table;
+
+    $('#searchModal').modal('toggle');
+  }
+}
+
+function buildTableRows( peoples ) {
+  var rows = '';
+  for( var i = 0; i < peoples.length; i++ ){
+    var people = peoples[i];
+    tr  =  '<tr id="row'+people.id+'">';
+    tr += '<td class="text-center"><button class="btn btn-default btn-sm editContact edid'+people.id+'"><i class="fa fa-user editContact edid'+people.id+'" aria-hidden="true"> </i></button>';
+    tr += '</td><td>' + people.fname + ' ' + people.lname + '</td>';
+    tr += '<td>' + people.phone + '</td>';
+    tr += '<td>' + people.email;
+    if( people.email != ''){ tr += '<button class="btn btn-default btn-sm pull-right email-link emid' + people.id + '"><i class="fa fa-envelope-o email-link emid' + people.id + '" aria-hidden="true"></i></button></td>'; }
+    tr += '<td>';
+    if( people.street != '') {
+      tr += people.street + ' ' + people.city + ', ' + people.state + ' ' + people.zip;
+      tr += '<button class="btn btn-default btn-sm pull-right map-link mapid' + people.id + '"><i class="fa fa-map-o map-link mapid' + people.id + '" aria-hidden="true"></i></button></td>';
+    }
+    tr += '</td><td class="text-center">';
+    tr += '<button class="btn btn-default btn-sm delContact delid'+people.id+'"><i class="fa fa-times delContact delid'+people.id+'" aria-hidden="true"></i></button>';
+    tr += '</td></tr>';
+    rows += tr;
+  }
+  return rows;
+}
+
+function buildResultsRows( peoples ) {
+  var rows = '';
+  for( var i = 0; i < peoples.length; i++ ){
+    var people = peoples[i];
+    tr  =  '<tr id="row'+people.id+'"></td>';
+    tr += '<td><a href="edit.html?id='+people.id+'">' + people.fname + ' ' + people.lname + '</a></td>';
+    tr += '<td>' + people.phone + '</td>';
+    tr += '<td>' + people.email + '</td>';
+    if( people.street != '')  { tr += '<td>' + people.street + ' ' + people.city + ', ' + people.state + ' ' + people.zip + '</td>'; }
+    else                      { tr += '<td></td>'; }
+    tr += '<td class="text-center"></td></tr>';
+    rows += tr;
+  }
+  return rows;
 }
 
 function validateFields(){
@@ -263,7 +329,6 @@ function validateFields(){
 }
 function validationFailed(field) {
 	// add a class to the group
-  // TODO: validate state is 2 letters
 	var groupID = field + groupName;
 	var test = document.getElementById(groupID);
 	var classes = test.getAttribute('class');
@@ -295,7 +360,7 @@ function validationFailed(field) {
 			document.getElementById(field + groupName).appendChild(div);
 			break;
 	}
-	document.getElementById(field).focus();
+	//document.getElementById(field).focus();
 }
 function resetField(field){
 	var groupId = field + groupName;
@@ -319,11 +384,19 @@ function resetField(field){
 
 function findId( target, state ) {
   var classList = target.classList;
-  if( state == 'edit')  { var patt = /edid/i; }
+  if( state == 'edit')          { var patt = /edid/i; }
   else if( state == 'delete')   { var patt = /delid/i; }
-  for( var i = 0; i < classList.length; i++ ) {
-    var test = classList[i].search(patt);
-    if( test != -1 ) { var id = classList[i].replace(patt, ''); }
+  else if( state == 'email')    { var patt = /emid/i; }
+  else if( state == 'maps')     { var patt = /mapid/i; }
+  else if( state == 'get')      { var patt = /\?id=/i; }
+
+  if( Array.isArray(classList) ) {
+    for( var i = 0; i < classList.length; i++ ) {
+      var test = classList[i].search(patt);
+      if( test != -1 ) { var id = classList[i].replace(patt, ''); }
+    }
+  } else {
+    var id = target.replace(patt, '');
   }
   return id;
 }

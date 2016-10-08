@@ -32,11 +32,11 @@
             <li class=""><a href="delete.html"><i class="fa fa-user-times faBorder" aria-hidden="true"></i> Delete A Contact</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <form class="form-inline">
+            <form class="form-inline" id="searchContacts">
               <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search for ...">
+                <input type="text" class="form-control" id="searchFor" placeholder="Search for ...">
                 <span class="input-group-btn">
-                  <button class="btn btn-default" type="button">
+                  <button class="btn btn-default" type="button" id="searchButton">
                     <i class="fa fa-search" aria-hidden="true"></i>
                     <span class="sr-only">Search</span>
                   </button>
@@ -90,6 +90,25 @@
           <input type="reset" value="Reset" class="btn btn-default" />
         </div>
       </form>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="searchModalLabel"></h4>
+          </div>
+          <div class="modal-body" id="searchModalBody">
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <!--button type="button" class="btn btn-primary">Save changes</button-->
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Latest compiled and minified JavaScript -->
