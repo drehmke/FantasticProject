@@ -12,13 +12,18 @@
     <link rel="stylesheet" href="bagels.css" type="text/css" />
   </head>
   <body>
-  	
+
   	<div class='container' id='gameboard'>
-  		<div class="well">
-  		<form id="guesses" class="form form-horizontal">
-  			
-  		</form>
-  		</div>
+        <h2>Bagels <button type="button" class="btn btn-sm btn-info pull-right resetBtn" id="resetBtn">Reset the game board</button></h2>
+        <p id="speechbubble" class="halText"></p>
+  		    <form id="guesses" class="form form-horizontal">
+            <div id="guessList">
+              <div class="row">
+                <div class="col-sm-6" id="col1"></div>
+                <div class="col-sm-6" id="col2"></div>
+              </div>
+            </div>
+  		    </form>
   	</div>
 
 

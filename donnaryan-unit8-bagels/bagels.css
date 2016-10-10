@@ -1,1 +1,6 @@
+body { background-color: rgb(40, 40, 39); color: limegreen; font-family: "Courier New", monospace; }
 .form-horizontal .form-group { margin-right: 0; margin-left: 0; }
+
+strong { font-weight: bold; }
+
+.resetBtn { margin-right: 25%; display: none; }
