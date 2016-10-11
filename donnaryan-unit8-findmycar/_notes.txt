@@ -1,0 +1,59 @@
+Find My Car App
+A good developer should be able to learn a new API (Application Programming Interface) quickly. In this practice app, you are asked to take advantage of two new APIs:
+
+Google Maps API - The Google Maps API enables you to integrate a map in your HTML page. You can include markers in the map to mark specific locations.
+HTML5 Geolocation API - The HTML5 Geolocation API enables you to retrieve your current latitude and longitude. In other words, it tells you exactly where you are.
+When visiting the mall, I always forget where I parked my car. In this lesson, I want you to build an app that will enable me to never lose my car again.
+
+When I arrive at the mall, I should be able to push a button to record my position on the map. When I am ready to leave the mall, I should be able to look at the app to find my car.
+
+To build this app, you will need to use the Google Maps API. Here is some sample code that illustrates how you can use the Google Maps API to display a map with a marker in an HTML page:
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+
+    <img id="map" />
+
+    <script>
+      var latitude = 47.620581;
+      var longitude = -122.349350;
+      var mapUrl = 'http://maps.googleapis.com/maps/api/staticmap'
+        + '?center=' + latitude + ',' + longitude
+        +' &zoom=18'
+        + '&size=500x500'
+        + '&markers=color:red|' + latitude + ',' + longitude
+        + '&sensor=false';
+      document.getElementById('map').src = mapUrl;
+    </script>
+
+  </body>
+</html>
+
+The latitude and longitude in the code above represents the location of the Seattle Space Needle. These coordinates are used twice. First, they are used to set the center of the map and then they are used to create the red marker in the center of the map.
+
+To build the Find My Car app, you will also need to use the HTML5 Geolocation API. The following code sample illustrates how you can get your current location:
+
+<script>
+  navigator.geolocation.getCurrentPosition(function(position) {
+    var latitude = position.coords.latitude;
+    var longitude = position.coords.longitude;
+    var accuracy = position.coords.accuracy; // in meters
+    var message = 'You are located at ' + latitude + ', ' + longitude
+      + ' with an accuracy of ' + accuracy + ' meters ';
+    console.log(message);
+  });
+</script>
+
+Warning: You won't be able to use Geolocation when working with the Google Chrome browser and a local file. In order to use the script above, you need to use another browser such as Mozilla Firefox or Microsoft IE.
+
+When you execute the code above, you are first asked to provide permission to share your location. After you provide permission, your current latitude and longitude are displayed in the JavaScript Console Window:
+
+The accuracy of the longitude and latitude readings is also displayed (in Firefox, the accuracy is only about 4,000 meters). The accuracy is much better when using a mobile device that supports GPS.
+
+To build the Find My Car app, you will need to combine what you know about the Google Maps API with what you know about the HTML5 Geolocation API to build a single application. The app should enable you to record your position at any time so you can find that position on a map at a later time (so you can find your car).
