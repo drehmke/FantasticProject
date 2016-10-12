@@ -1,3 +1,6 @@
+var lat;
+var lon;
+
 document.getElementById('carSave').addEventListener('click', function(){
   if(navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition);
@@ -28,8 +31,15 @@ document.getElementById('carReset').addEventListener('click', function(){
   document.getElementById('map').src = '';
   document.getElementById('locText').innerHTML = '';
   document.getElementById('showLoc').style.display = 'none';
+  lat = '';
+  long = '';
   // Disable the Show button since we don't have something to show now
   toggleShowCar('hide');
+})
+
+document.getElementById('mapit').addEventListener('click', function() {
+  var mapURL = 'https://www.google.com/maps/@' + lat  + ',' + long;
+  var map = window.open(mapURL);
 })
 
 /* ---- Functions & Methods ------------------------------------------------- */
@@ -43,6 +53,8 @@ function showPosition(position) {
     + '&sensor=false';
   document.getElementById('map').src = mapUrl;
   document.getElementById('locText').innerHTML = 'Your car is located at <em>(roughly)</em> ' + position.coords.latitude + ' Latitude, ' + position.coords.longitude + ' Longitude.'
+  lat = position.coords.latitude;
+  long = position.coords.longitude;
 }
 
 function toggleShowCar(state) {
