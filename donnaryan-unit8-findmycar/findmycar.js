@@ -1,54 +1,58 @@
-/* ---- Global Variables ---------------------------------------------------- */
+document.getElementById('carSave').addEventListener('click', function(){
+  if(navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
 
+    // Enable the Show button since we have something to show now
+    toggleShowCar('show');
 
-
-/* ---- Text Variables ------------------------------------------------------ */
-
-
-/* ---- Fun Stuff ----------------------------------------------------------- */
-$('#carSave').click(function(){
+  }
+  else {
+    documenet.getElementById('mapDiv').innerHTML = 'Geolocation is not supported by this browser.';
+  }
 })
 
-myMap();
+document.getElementById('carShow').addEventListener('click', function(){
+  var doSomething = false;
+  var classes = document.getElementById('carShow').classList;
+  for( var i = 0; i < classes.length; i++ ) {
+    if( classes[i] != 'disabled') { doSomething = true; }
+    else                          { doSomething = false; }
 
-function myMap() {
-  var myCenter = new google.maps.LatLng(51.508742,-0.120850);
-  var mapCanvas = document.getElementById("map");
-  var mapOptions = {center: myCenter, zoom: 5};
-  var map = new google.maps.Map(mapCanvas, mapOptions);
-  var marker = new google.maps.Marker({
-  position:myCenter,
-  animation:google.maps.Animation.BOUNCE
-  });
-  marker.setMap(map);
-}
+  }
 
+  if( doSomething ) { document.getElementById('showLoc').style.display = 'block'; }
+
+})
+
+document.getElementById('carReset').addEventListener('click', function(){
+  document.getElementById('map').src = '';
+  document.getElementById('locText').innerHTML = '';
+  document.getElementById('showLoc').style.display = 'none';
+  // Disable the Show button since we don't have something to show now
+  toggleShowCar('hide');
+})
 
 /* ---- Functions & Methods ------------------------------------------------- */
-/*
-function drawMap(lat, long) {
-  var latitude = parseInt(lat);
-  var longitude = parseInt(long);
+function showPosition(position) {
+  var carCoords = [position.coords.latitude, position.coords.longitude];
   var mapUrl = 'http://maps.googleapis.com/maps/api/staticmap'
-    + '?center=' + latitude + ',' + longitude
+    + '?center=' + position.coords.latitude + ',' + position.coords.longitude
     +' &zoom=18'
     + '&size=500x500'
-    + '&markers=color:red|' + latitude + ',' + longitude
+    + '&markers=color:red|' + position.coords.latitude + ',' + position.coords.longitude
     + '&sensor=false';
   document.getElementById('map').src = mapUrl;
+  document.getElementById('locText').innerHTML = 'Your car is located at <em>(roughly)</em> ' + position.coords.latitude + ' Latitude, ' + position.coords.longitude + ' Longitude.'
 }
-var test = navigator.geolocation.getCurrentPosition(function(position) {
-  var mapInfo = [];
-  var latitude = position.coords.latitude;
-  mapInfo.push(latitude);
-  var longitude = position.coords.longitude;
-  mapInfo.push(longitude);
-  var accuracy = position.coords.accuracy; // in meters
-  mapInfo.push(accuracy);
-  //var message = 'You are located at ' + latitude + ', ' + longitude + ' with an accuracy of ' + accuracy + ' meters ';
-  //console.log(message);
 
-  return mapInfo;
-});
-*/
-/* ---- Prototypes ---------------------------------------------------------- */
+function toggleShowCar(state) {
+  var newClasses = [];
+  var classes = document.getElementById('carShow').classList;
+  for( var i = 0; i < classes.length; i++ ) {
+    if( classes[i] != 'disabled') { newClasses.push(classes[i]); }
+  }
+
+  if( state == "hide") { newClasses.push('disabled'); }
+  document.getElementById('carShow').className = newClasses.join(' ') ;
+  //console.log(newClasses);
+}
